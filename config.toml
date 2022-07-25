@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://constructicon.github.io/russian"
+base_url = "https://constructicon.github.io/persian"
 
 title = "Constructicon"
 
@@ -23,4 +23,4 @@ highlight_theme = "cheerfully-light"
 [extra]
 # Put all your custom variables here
 
-twitter_image = "https://raw.githubusercontent.com/constructicon/russian/main/content/logo/constructicon-round.png"
+twitter_image = "https://raw.githubusercontent.com/constructicon/persian/main/content/logo/constructicon-round.png"
