@@ -2,7 +2,8 @@
 
 # Constructicon
 
-Searchable database of multiword grammatical constructions of Russian.
+Searchable database of multiword grammatical constructions of Persian/Farsi.
+Based on https://github.com/constructicon/russian.
 
 
 ### Using these libraries
