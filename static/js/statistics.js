@@ -121,7 +121,7 @@ async function drawChartSFA() {
 // get data
 
 async function getDataSFA () {
-    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/russian-data/main/database.csv');
+    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/persian-data/main/database.csv');
     const synt_func_anchor = [];
     const nullConstr = 0;
     data.forEach(function (d){
@@ -159,7 +159,7 @@ async function getDataSFA () {
 }
 
 async function getDataSTC () {
-    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/russian-data/main/database.csv');
+    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/persian-data/main/database.csv');
     const synt_func = [];
     const nullConstr = 0;
     data.forEach(function (d){
@@ -197,7 +197,7 @@ async function getDataSTC () {
 }
 
 async function getDataSem(x) {
-    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/russian-data/main/database.csv');
+    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/persian-data/main/database.csv');
     const sem_types = [];
     const sem_columns = data.columns.slice(data.columns.indexOf('Actionality'));
     data.forEach(function (d){
@@ -267,7 +267,7 @@ async function changeData (chart_id){
 // Top of anchors by parts of speech
 
 async function makeTopLists () {
-    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/russian-data/main/database.csv');
+    const data = await d3.csv('https://raw.githubusercontent.com/constructicon/persian-data/main/database.csv');
     // добавить обработку столбика с леммами и частями речи
 }
 

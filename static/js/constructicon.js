@@ -276,7 +276,7 @@ var app = new Vue({
     },
     created: function() {
         this.show_data_spinner = true;
-        fetch_data(this, 'https://raw.githubusercontent.com/constructicon/russian-data/generated/');
+        fetch_data(this, 'https://raw.githubusercontent.com/constructicon/persian-data/generated/');
 
         // https://lodash.com/docs#debounce
         this.search_debounced = _.debounce(this.search, 500);
