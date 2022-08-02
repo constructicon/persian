@@ -378,11 +378,25 @@ var app = new Vue({
         },
         annotate: function(text) {
             // renders words that come right after [...] as subscript with color
+            // first try words following []
             let matches = text.match(/(?<=\])[A-Za-z]+/g);
-            for (let substring of matches) {
-                text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+            if (matches != null) {
+                for (let substring of matches) {
+                    text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+                }
+                return text;
             }
-            return text;
+            // FIXME: unsure whether the below works or is even needed
+            // now try words preceding [] (right-to-left languages)
+            matches = text.match(/[A-Za-z]+(?=\[)/g);
+            if (matches != null) {
+                for (let substring of matches) {
+                    text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+                }
+                return text;
+            }
+            // nothing worked, return empty string
+            return "";
         },
         get_random_selection: function() {
             let records_with_this_level = [];
