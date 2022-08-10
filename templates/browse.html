@@ -63,7 +63,8 @@
             <ol>
               <li v-for="example in records[current_record_number].examples">
                 <span v-html="annotate(example.example)"></span>
-                <span v-html="example.transcription"></span>
+                <br>
+                <span style="color: #7b7e98"  v-html="example.transcription"></span>
               </li>
             </ol>
 
