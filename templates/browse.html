@@ -136,8 +136,12 @@
               <br>
 
               <br>
-              <b>COMMENT</b> {[ records[current_record_number].comment ]}
-              <br>
+              <b>COMMENT</b>
+              <ul>
+                <li v-for="comment in records[current_record_number].comment">
+                  {[ key(comment) ]}: {[ value(comment) ]}
+                </li>
+              </ul>
 
               <br>
               <b>REFERENCES</b>
