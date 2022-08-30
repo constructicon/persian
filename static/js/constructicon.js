@@ -14,6 +14,11 @@ function to_title_case(str) {
 }
 
 
+function reverse(s) {
+    return s.split("").reverse().join("");
+}
+
+
 function build_search_index(record_numbers, records, keys) {
     let search_index = new JsSearch.Search('record');
     // https://github.com/bvaughn/js-search#configuring-the-index-strategy
@@ -376,13 +381,17 @@ var app = new Vue({
             record_numbers_matching_search.sort((a, b) => a - b);
             this.record_numbers_matching_search = record_numbers_matching_search;
         },
-        annotate: function(text) {
+        annotate: function(text, reverse_string) {
             // renders words that come right after [...] as subscript with color
             // first try words following []
             let matches = text.match(/(?<=\])[A-Za-z]+/g);
             if (matches != null) {
                 for (let substring of matches) {
-                    text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+                    if (reverse_string) {
+                        text = text.replace(substring, '<sub><span style="color: #db2f6d">' + reverse(substring) + '</span></sub>');
+                    } else {
+                        text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+                    }
                 }
                 return text;
             }
