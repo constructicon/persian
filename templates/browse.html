@@ -48,11 +48,12 @@
             <br>
 
             <b>NAME</b>
-            <span style="direction:rtl; unicode-bidi:bidi-override;">
+            <div style="direction:rtl;">
               <b>{[ records[current_record_number].name ]}</b>
-              -
+            </div>
+            <div style="direction:rtl;">
               <i>{[ records[current_record_number].illustration ]}</i>
-            </span>
+            </div>
 
             <div v-for="definition in records[current_record_number].definitions">
               <br>
