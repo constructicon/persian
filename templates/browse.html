@@ -55,6 +55,18 @@
               <i>{[ records[current_record_number].illustration ]}</i>
             </div>
 
+            <br>
+            <b>NAME TRANSCRIPTION</b>
+            <p>{[ records[current_record_number].name_transcription ]}</p>
+
+            <br>
+            <b>NAME TRANSLATION</b>
+            <p>{[ records[current_record_number].name_translation ]}</p>
+
+            <br>
+            <b>ILLUSTRATION TRANSCRIPTION</b>
+            <p>{[ records[current_record_number].illustration_transcription ]}</p>
+
             <div v-for="definition in records[current_record_number].definitions">
               <br>
               <b>DEFINITION ({[ to_title_case(key(definition)) ]})</b>
