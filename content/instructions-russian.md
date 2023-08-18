@@ -1,8 +1,6 @@
 +++
 +++
 
-{{ youtube(id="hEbVtimsoJQ", class="youtube") }}
-
 # Инструкции
 
 ## 1. Объяснение страниц сайта
