@@ -162,7 +162,10 @@
               </ul>
 
               <br>
-              <b>USAGE LABEL</b> {[ records[current_record_number].usage_label ]}
+              <b>USAGE LABEL</b> 
+              <ul>                
+                <li v-for="item in records[current_record_number].usage_label">{[ item ]}</li>
+              </ul>
               <br>
 
               <br>
