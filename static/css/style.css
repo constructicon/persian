@@ -1,6 +1,6 @@
+
 body {
-  font-family: 'Vazirmatn-Regular', 'Open Sans', sans-serif;
-  font-family: 'Vazirmatn-Regular', 'Roboto', sans-serif;
+  font-family: 'Vazirmatn', sans-serif;
   font-size: 16px;
 }
 
@@ -82,3 +82,4 @@ table {
   display: table;
   border-spacing: 20px 20px;
 }
+
