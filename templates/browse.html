@@ -140,12 +140,14 @@
               </ul>
 
               <br>
-              <b>DEPENDENCY STRUCTURE</b>
+
+              <!-- <b>DEPENDENCY STRUCTURE</b>
               <ol>
-                <span style="direction:rtl; unicode-bidi:bidi-override;">
+                <div dir="rtl">
                   <li v-for="item in records[current_record_number].dependency_structure">{[ item ]}</li>
-                </span>
+                </div>
               </ol>
+
 
               <br>
               <b>DEPENDENCY STRUCTURE OF ILLUSTRATION</b>
@@ -153,7 +155,7 @@
                 <span style="direction:rtl; unicode-bidi:bidi-override;">
                   <li v-for="item in records[current_record_number].dependency_structure_of_illustration">{[ item ]}</li>
                 </span>
-              </ol>
+              </ol> -->
 
               <br>
               <b>COMMUNICATIVE TYPE</b>
@@ -167,16 +169,29 @@
                 <li v-for="item in records[current_record_number].usage_label">{[ item ]}</li>
               </ul>
               <br>
-
+<!-- 
               <br>
               <b>COMMENT</b>
               <ul>
                 <li v-for="comment in records[current_record_number].comment">
                   {[ key(comment) ]}: {[ value(comment) ]}
                 </li>
-              </ul>
+              </ul> -->
+
+              <div v-for="comment in records[current_record_number].comment">
+                <br>
+                <b>COMMENT ({[ to_title_case(key(comment)) ]})</b>
+                <div v-if="key(comment) == 'Persian'">
+                  <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="value(comment)"></span>
+                </div>
+                <div v-if="key(comment) != 'Persian'">
+                  <span v-html="value(comment)"></span>
+                </div>
+                <br>
+              </div>
 
               <br>
+
               <b>REFERENCES</b>
               <ul>
                 <li v-for="item in records[current_record_number].references">{[ item ]}</li>
