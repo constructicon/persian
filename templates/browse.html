@@ -99,47 +99,61 @@
 
             <div v-if="show_additional_information">
               <br>
-              <b>COMMON FILLERS</b>
-              <ul>
-                <li v-for="item in records[current_record_number].common_fillers">{[ item ]}</li>
-              </ul>
+              <div v-show="records[current_record_number].common_fillers[0] != null">
+                <b>COMMON FILLERS</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].common_fillers">{[ item ]}</li>
+                </ul>
+                <br>
+              </div>
+              
+              
+              <div v-if="!records[current_record_number].semantic_types.length">
+                <b>SEMANTIC TYPE</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].semantic_types">
+                    {[ item['type'] ]}
+                    <ul>
+                      <li v-for="it in item['subtypes']">{[ it['type'] ]}</li>
+                    </ul>
+                  </li>
+                </ul>
+                <br>
+              </div>
 
-              <br>
-              <b>SEMANTIC TYPE</b>
-              <ul>
-                <li v-for="item in records[current_record_number].semantic_types">
-                  {[ item['type'] ]}
-                  <ul>
-                    <li v-for="it in item['subtypes']">{[ it['type'] ]}</li>
-                  </ul>
-                </li>
-              </ul>
+              <div v-show="records[current_record_number].syntactic_type_of_construction[0] != null">
+                <b>SYNTACTIC TYPE OF CONSTRUCTION</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].syntactic_type_of_construction">{[ item ]}</li>
+                </ul>
+                <br>
+              </div>
 
-              <br>
-              <b>SYNTACTIC TYPE OF CONSTRUCTION</b>
-              <ul>
-                <li v-for="item in records[current_record_number].syntactic_type_of_construction">{[ item ]}</li>
-              </ul>
+              
+              <div v-show="records[current_record_number].syntactic_function_of_anchor[0] != null">
+                <b>SYNTACTIC FUNCTION OF ANCHOR</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].syntactic_function_of_anchor">{[ item ]}</li>
+                </ul>
+                <br>
+              </div>
 
-              <br>
-              <b>SYNTACTIC FUNCTION OF ANCHOR</b>
-              <ul>
-                <li v-for="item in records[current_record_number].syntactic_function_of_anchor">{[ item ]}</li>
-              </ul>
+              <div v-show="records[current_record_number].syntactic_structure_of_anchor[0] != null">
+                <b>SYNTACTIC STRUCTURE OF ANCHOR</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].syntactic_structure_of_anchor">{[ item ]}</li>
+                </ul>
+                <br>
+              </div>
+              
+              <!-- <div v-if="!records[current_record_number].part_of_speech_of_anchor.length"> -->
+                <b>PART OF SPEECH OF ANCHOR</b>
+                <ul>
+                  <li v-for="item in records[current_record_number].part_of_speech_of_anchor">{[ item ]}</li>
+                </ul>
 
-              <br>
-              <b>SYNTACTIC STRUCTURE OF ANCHOR</b>
-              <ul>
-                <li v-for="item in records[current_record_number].syntactic_structure_of_anchor">{[ item ]}</li>
-              </ul>
-
-              <br>
-              <b>PART OF SPEECH OF ANCHOR</b>
-              <ul>
-                <li v-for="item in records[current_record_number].part_of_speech_of_anchor">{[ item ]}</li>
-              </ul>
-
-              <br>
+                <br>
+              <!-- </div> -->
 
               <!-- <b>DEPENDENCY STRUCTURE</b>
               <ol>
@@ -157,7 +171,6 @@
                 </span>
               </ol> -->
 
-              <br>
               <b>COMMUNICATIVE TYPE</b>
               <ul>
                 <li v-for="item in records[current_record_number].intonation">{[ item ]}</li>
@@ -178,16 +191,20 @@
                 </li>
               </ul> -->
 
+              <!-- FIXME: bad check for empty comments -->
               <div v-for="comment in records[current_record_number].comment">
-                <br>
-                <b>COMMENT ({[ to_title_case(key(comment)) ]})</b>
-                <div v-if="key(comment) == 'Persian'">
-                  <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="value(comment)"></span>
+                <div v-show="value(comment).trim().length != 2">
+                  
+                  <br>
+                  <b>COMMENT ({[ to_title_case(key(comment)) ]})</b>
+                  <div v-if="key(comment) == 'Persian'">
+                    <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="value(comment)"></span>
+                  </div>
+                  <div v-if="key(comment) != 'Persian'">
+                    <span v-html="value(comment)"></span>
+                  </div>
+                  <br>
                 </div>
-                <div v-if="key(comment) != 'Persian'">
-                  <span v-html="value(comment)"></span>
-                </div>
-                <br>
               </div>
 
               <br>
