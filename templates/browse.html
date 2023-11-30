@@ -85,7 +85,7 @@
               <li v-for="example in records[current_record_number].examples">
                 <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(example.example, true)"></span>
                 <br>
-                <span style="color: #7b7e98"  v-html="example.transcription"></span>
+                <span style="color: #7b7e98"  v-html="annotate(example.transcription, false)"></span>
               </li>
             </ol>
 
