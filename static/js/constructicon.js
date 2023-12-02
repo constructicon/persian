@@ -407,6 +407,13 @@ var app = new Vue({
             // nothing worked, return empty string
             return "";
         },
+        remove_quotation_marks(text) {
+            // removes the 1 character and two last characters, bad practive but works with
+            // strings returned by the value() function
+            const new_string = text.slice(1, -2)
+            return new_string;
+
+        },
         get_random_selection: function() {
             let records_with_this_level = [];
             for (let record_number of this.record_numbers) {
