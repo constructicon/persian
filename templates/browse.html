@@ -72,7 +72,7 @@
               <b>DEFINITION ({[ to_title_case(key(definition)) ]})</b>
             
               <div v-if="key(definition) == 'persian'" style="direction:RTL; text-align: right">
-                <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(remove_quotation_marks(value(definition), true))"></span>
+                <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(remove_quotation_marks(value(definition)), true)"></span>
               </div>
               <div v-if="key(definition) != 'persian'">
                 <span v-html="annotate(remove_quotation_marks(value(definition), false))"></span>
