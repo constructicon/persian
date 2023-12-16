@@ -72,22 +72,24 @@
               <b>DEFINITION ({[ to_title_case(key(definition)) ]})</b>
             
               <div v-if="key(definition) == 'persian'" style="direction:RTL; text-align: right">
-                <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(value(definition), true)"></span>
+                <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(remove_quotation_marks(value(definition)), true)"></span>
               </div>
               <div v-if="key(definition) != 'persian'">
-                <span v-html="annotate(value(definition), false)"></span>
+                <span v-html="annotate(remove_quotation_marks(value(definition), false))"></span>
               </div>
               <br>
             </div>
 
             <br>
             <b>EXAMPLES</b>
-            <div dir="RTL">
-              <ol style="direction:RTL; text-align: right">
+            <div>
+              <ol style="direction:rtl; text-align: right">
                 <li v-for="example in records[current_record_number].examples">
                   <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(example.example, true)"></span>
                   <br>
-                  <span style="color: #7b7e98"  v-html="annotate(example.transcription, false)"></span>
+                  <div style="direction:LTR">
+                    <span style="direction:ltr; color: #7b7e98"  v-html="annotate(example.transcription, false)"></span>
+                  </div>
                 </li>
               </ol>
             </div>
@@ -201,10 +203,10 @@
                   <br>
                   <b>COMMENT ({[ to_title_case(key(comment)) ]})</b>
                   <div v-if="key(comment) == 'Persian'" style="direction:RTL; text-align: right">
-                    <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="value(comment)"></span>
+                    <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="remove_quotation_marks(value(comment))"></span>
                   </div>
                   <div v-if="key(comment) != 'Persian'">
-                    <span v-html="value(comment)"></span>
+                    <span v-html="remove_quotation_marks(value(comment))"></span>
                   </div>
                   <br>
                 </div>
