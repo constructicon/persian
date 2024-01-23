@@ -211,7 +211,9 @@ async function fetch_data(data, url_prefix) {
 
     data.search_index = {};
     for (let key of ['name',
+            'name_transcription',
             'illustration',
+            'illustration_transcription',
             'semantic_roles',
             'morphology',
             'syntactic_type_of_construction',
@@ -335,7 +337,8 @@ var app = new Vue({
             if (this.search_string == '') {
                 record_numbers_matching_search = this.record_numbers;
             } else {
-                for (let key of ["name", "illustration"]) {
+                for (let key of ["name_transcription", "illustration_transcription"]) {
+
                     for (let result of this.search_index[key].search(this.search_string)) {
                         record_numbers_matching_search.push(result.record);
                     }
@@ -345,6 +348,7 @@ var app = new Vue({
             record_numbers_matching_search = [...new Set(record_numbers_matching_search)];
             record_numbers_matching_search.sort((a, b) => a - b);
             this.record_numbers_matching_search = record_numbers_matching_search;
+            console.log(record_numbers_matching_search)
         },
         advanced_search: function() {
             let record_numbers_matching_search = [];
