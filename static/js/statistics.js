@@ -282,9 +282,9 @@ async function printTopLists (words, id){
     }
 }
 
-const verbs = ['знать', 'говорить', 'хотеть', 'сказать', 'быть', 'дать', 'мочь', 'иметь', 'взять', 'делать']
-const nouns = ['время', 'дело', 'раз', 'чёрт', 'пора', 'день', 'случай', 'вид', 'рука', 'слово']
-const adjectives = ['равный', 'хороший', 'полный', 'другой', 'нужный', 'плохой', 'последний', 'целый', 'первый', 'должный']
+const verbs = []
+const nouns = []
+const adjectives = []
 
 
 printTopLists(verbs, 'TopVerbs')
