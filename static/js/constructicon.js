@@ -387,30 +387,36 @@ var app = new Vue({
         },
         annotate: function(text, reverse_string) {
             // renders words that come right after [...] as subscript with color
-            // first try words following []
-            let matches = text.match(/(?<=\])[A-Za-z]+/g);
-            if (matches != null) {
-                for (let substring of matches) {
-                    if (reverse_string) {
+
+            if (reverse_string) {
+                let matches = text.match(/(?<=\])[A-Za-z]+/g);
+                if (matches != null) {
+                    for (let substring of matches){
                         text = text.replace(substring, '<sub><span style="color: #db2f6d">' + reverse(substring) + '</span></sub>');
-                    } else {
-                        text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
                     }
                 }
-                return text;
-            }
-            // FIXME: unsure whether the below works or is even needed
-            // now try words preceding [] (right-to-left languages)
-            matches = text.match(/[A-Za-z]+(?=\[)/g);
-            if (matches != null) {
-                for (let substring of matches) {
-                    text = text.replace(substring, '<sub><span style="color: #db2f6d">' + substring + '</span></sub>');
+            } else {
+                const matches = [...text.matchAll(/(?<=\])[A-Za-z]+/g)];
+
+                if (matches.length > 0) {
+                    // Iterate over matches in reverse to avoid index shifting issues
+                    for (let i = matches.length - 1; i >= 0; i--) {
+                        const match = matches[i];
+                        const substring = match[0];
+                        const startIndex = match.index;
+                
+                        // Replace the specific match only at its position
+                        text = text.substring(0, startIndex) +
+                               '<sub><span style="color: #db2f6d">' + substring + '</span></sub>' +
+                               text.substring(startIndex + substring.length);
+                    }
                 }
-                return text;
+
             }
-            // nothing worked, return empty string
-            return "";
+            return text;
+
         },
+
         remove_quotation_marks(text) {
             // removes the 1 character and two last characters, bad practive but works with
             // strings returned by the value() function
