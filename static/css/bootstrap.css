@@ -21,7 +21,7 @@
   --primary: #007bff;
   --secondary: #6c757d;
   --success: #28a745;
-  --info: #44546a;
+  --info: #3bedb7;
   --warning: #ffc107;
   --danger: #dc3545;
   --light: #f8f9fa;
@@ -6741,13 +6741,13 @@ button.bg-success:focus {
 }
 
 .bg-info {
-  background-color: #4a7c97 !important;
+  background-color: #3bedb7 !important;
 }
 
 a.bg-info:hover, a.bg-info:focus,
 button.bg-info:hover,
 button.bg-info:focus {
-  background-color: #44546a !important;
+  background-color: #3bedb7 !important;
 }
 
 .bg-warning {
