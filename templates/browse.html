@@ -1,3 +1,4 @@
+{% import "macros.html" as macros %}
 {% extends "base.html" %}
 
 {% block content %}
@@ -15,14 +16,12 @@
     </div>
 
     <div v-if="all_data_loaded">
+        {% block search %}
+        {% endblock search %}
 
-      <div class="row top-buffer">
-        <div class="col-md-6">
-          {% block search %}
-          {% endblock search %}
-        </div>
+      <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div v-if="record_numbers_matching_search.length > 0">
 
             <div class="form-group">
@@ -33,6 +32,10 @@
                     {[ record_number ]}
                     -
                     <b>{[ records[record_number].name ]}</b>
+                    &nbsp;
+                    |
+                    &nbsp;
+                    {[ records[record_number].illustration  ]}
                   </option>
                 </select>
               </span>
@@ -223,6 +226,8 @@
           </div>
         </div>
       </div>
+      
+    </div>
 
     </div>
   </div>
