@@ -21,6 +21,17 @@ function reverse(s) {
 
 function build_search_index(record_numbers, records, keys) {
     let search_index = new JsSearch.Search('record');
+    search_index.tokenizer = {
+        tokenize( text /* string */ ) {
+          // Convert text to an Array of strings and return the Array
+          const regexp = /\S+/g;
+          // Extract only the matched strings
+          const tokenized = Array.from(text.matchAll(regexp), match => match[0]);
+          console.log(tokenized)
+          return tokenized;
+        }
+      };
+    
     // https://github.com/bvaughn/js-search#configuring-the-index-strategy
     search_index.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
     for (let key of keys) {
@@ -103,6 +114,7 @@ function _helper(array) {
 
     return tree;
 }
+
 
 
 function collect_options_tree(record_numbers, records, key) {
@@ -225,6 +237,7 @@ async function fetch_data(data, url_prefix) {
         ]) {
         data.search_index[key] = build_search_index(data.record_numbers, data.records, [key]);
     }
+    console.log(data.search_index['name'])
 
     data.all_data_loaded = true;
     data.show_data_spinner = false;
@@ -333,13 +346,14 @@ var app = new Vue({
         },
         search: function() {
             let record_numbers_matching_search = [];
+            const normalized_search = this.search_string.normalize('NFC').trim();
 
-            if (this.search_string == '') {
+            if (normalized_search == '') {
                 record_numbers_matching_search = this.record_numbers;
             } else {
                 for (let key of ["name_transcription", "illustration_transcription"]) {
 
-                    for (let result of this.search_index[key].search(this.search_string)) {
+                    for (let result of this.search_index[key].search(normalized_search)) {
                         record_numbers_matching_search.push(result.record);
                     }
                 }
