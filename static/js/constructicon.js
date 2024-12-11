@@ -2,7 +2,6 @@
 // more hidden errors during development
 'use strict';
 
-
 // https://stackoverflow.com/a/196991
 function to_title_case(str) {
     return str.replace(
@@ -20,28 +19,40 @@ function reverse(s) {
 
 
 function build_search_index(record_numbers, records, keys) {
-    let search_index = new JsSearch.Search('record');
-    search_index.tokenizer = {
-        tokenize( text /* string */ ) {
-          // Convert text to an Array of strings and return the Array
-          const regexp = /\S+/g;
-          // Extract only the matched strings
-          const tokenized = Array.from(text.matchAll(regexp), match => match[0]);
-          console.log(tokenized)
-          return tokenized;
+    // Initialize FlexSearch index using FlexSearch.create()
+
+    var index = new FlexSearch.Document({
+        // encode: 'balance',    // Balanced encoding for efficient search
+        tokenize: 'reverse',  // Tokenize based on reverse (good for RTL text)
+        rtl: true,            // Enables Right-to-Left text handling
+        doc: {
+            id: 'record',     // Each document is identified by its record number
+            // field: keys       // Define which fields to index (these will come from records)
+            field: keys
         }
-      };
-    
-    // https://github.com/bvaughn/js-search#configuring-the-index-strategy
-    search_index.indexStrategy = new JsSearch.AllSubstringsIndexStrategy();
-    for (let key of keys) {
-        search_index.addIndex(key);
-    }
+    });
+
+    // Add records to the index
     for (let record_number of record_numbers) {
-        search_index.addDocuments([records[record_number]]);
+        const record = records[record_number];
+        if (record) {
+            // Construct the document with fields for each record
+            // let dict_out = {};
+            let dict_out = {record: Number(record_number)}; // Ensure the unique ID is included
+            for (let k of keys) {
+                dict_out[k] = record[k] || ''; // Add the value of the field (empty string if not found)
+            }
+            // Add the document to the index
+            // console.log(dict_out)
+            // console.log(record_number, dict_out)
+            index.add(Number(record_number), dict_out);
+        }
     }
-    return search_index;
+
+    // console.log(index.search([{ query: 'ربطی', field: 'name' }]))
+    return index;        // Return the search index
 }
+
 
 
 function collect_options(record_numbers, records, key, is_list) {
@@ -222,23 +233,36 @@ async function fetch_data(data, url_prefix) {
     data.records = flatten_semantic_types(data.record_numbers, data.records);
 
     data.search_index = {};
-    for (let key of ['name',
-            'name_transcription',
-            'illustration',
-            'illustration_transcription',
-            'semantic_roles',
-            'morphology',
-            'syntactic_type_of_construction',
-            'syntactic_function_of_anchor',
-            'syntactic_structure_of_anchor',
-            'part_of_speech_of_anchor',
-            'cefr_level',
-            'semantic_types_flat',
-        ]) {
-        data.search_index[key] = build_search_index(data.record_numbers, data.records, [key]);
-    }
-    console.log(data.search_index['name'])
-
+    // for (let key of ['name',
+    //         'name_transcription',
+    //         'illustration',
+    //         'illustration_transcription',
+    //         'semantic_roles',
+    //         'morphology',
+    //         'syntactic_type_of_construction',
+    //         'syntactic_function_of_anchor',
+    //         'syntactic_structure_of_anchor',
+    //         'part_of_speech_of_anchor',
+    //         'cefr_level',
+    //         'semantic_types_flat',
+    //     ]) {
+    //     data.search_index[key] = build_search_index(data.record_numbers, data.records, [key]);    
+        // console.log(data.search_index['name'])
+    // }
+    const keys_ = ['name',
+                'name_transcription',
+                'illustration',
+                'illustration_transcription',
+                'semantic_roles',
+                'morphology',
+                'syntactic_type_of_construction',
+                'syntactic_function_of_anchor',
+                'syntactic_structure_of_anchor',
+                'part_of_speech_of_anchor',
+                'cefr_level',
+                'semantic_types_flat',
+            ]
+    data.search_index = build_search_index(data.record_numbers, data.records, keys_);
     data.all_data_loaded = true;
     data.show_data_spinner = false;
 }
@@ -345,60 +369,59 @@ var app = new Vue({
             return x[Object.keys(x)[0]];
         },
         search: function() {
-            let record_numbers_matching_search = [];
             const normalized_search = this.search_string.normalize('NFC').trim();
 
-            if (normalized_search == '') {
-                record_numbers_matching_search = this.record_numbers;
-            } else {
-                for (let key of ["name_transcription", "illustration_transcription"]) {
+            if (!this.search_string) {
+                // Return all records if the search string is empty
+                this.record_numbers_matching_search = this.record_numbers;
+            }
+            else {
+                const fields_to_search = ['name', 'name_transcription', 'illustration', 'illustration_transcription'];
+                // const search_results = this.search_index.search([{query: normalized_search, field: "name"}]);
+                const search_results = this.search_index.search(normalized_search, fields_to_search);
 
-                    for (let result of this.search_index[key].search(normalized_search)) {
-                        record_numbers_matching_search.push(result.record);
+                // Extract `result` arrays from the search results
+                let record_numbers_matching_search = [];
+                search_results.forEach(resultObj => {
+                    if (resultObj.result) {
+                        record_numbers_matching_search.push(...resultObj.result);
+                    }
+                });
+    
+                // Remove duplicates and sort the results
+                record_numbers_matching_search = [...new Set(record_numbers_matching_search)];
+                record_numbers_matching_search.sort((a, b) => a - b);
+        
+                this.record_numbers_matching_search = record_numbers_matching_search;
+            }
+        
+
+        },
+        
+        advanced_search: function(selected_options) {
+            let index = this.search_index
+
+            let record_numbers_matching_search = new Set();
+
+            for (let key in selected_options) {
+                if (selected_options[key]) {
+                    // Search each field separately
+                    const search_string = '"' + selected_options[key].join('" "') + '"';
+                    const results = index.search(search_string, { field: key, enrich: true });
+        
+                    // Add results to the matching records set
+                    for (let result of results) {
+                        for (let doc of result.result) {
+                            record_numbers_matching_search.add(doc);
+                        }
                     }
                 }
             }
-
-            record_numbers_matching_search = [...new Set(record_numbers_matching_search)];
-            record_numbers_matching_search.sort((a, b) => a - b);
-            this.record_numbers_matching_search = record_numbers_matching_search;
-            console.log(record_numbers_matching_search)
+        
+            // Convert to sorted array
+            return Array.from(record_numbers_matching_search).sort((a, b) => a - b);
         },
-        advanced_search: function() {
-            let record_numbers_matching_search = [];
-
-            let selected_options = {};
-            selected_options['semantic_roles'] = this.semantic_roles_selected;
-            selected_options['morphology'] = this.morphology_selected;
-            selected_options['syntactic_type_of_construction'] = this.syntactic_type_of_construction_selected;
-            selected_options['syntactic_function_of_anchor'] = this.syntactic_function_of_anchor_selected;
-            selected_options['syntactic_structure_of_anchor'] = this.syntactic_structure_of_anchor_selected;
-            selected_options['part_of_speech_of_anchor'] = this.part_of_speech_of_anchor_selected;
-            selected_options['cefr_level'] = this.level_selected;
-            selected_options['semantic_types_flat'] = this.semantic_types_selected;
-
-            for (let key of [
-                    'semantic_roles',
-                    'morphology',
-                    'syntactic_type_of_construction',
-                    'syntactic_function_of_anchor',
-                    'syntactic_structure_of_anchor',
-                    'part_of_speech_of_anchor',
-                    'cefr_level',
-                    'semantic_types_flat',
-                ]) {
-                if (selected_options[key] != null) {
-                    let search_string = '"' + selected_options[key].join('" "') + '"';
-                    for (let result of this.search_index[key].search(search_string)) {
-                        record_numbers_matching_search.push(result.record);
-                    }
-                }
-            }
-
-            record_numbers_matching_search = [...new Set(record_numbers_matching_search)];
-            record_numbers_matching_search.sort((a, b) => a - b);
-            this.record_numbers_matching_search = record_numbers_matching_search;
-        },
+        
         annotate: function(text, reverse_string) {
             // renders words that come right after [...] as subscript with color
 
