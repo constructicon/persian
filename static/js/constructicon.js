@@ -377,7 +377,6 @@ var app = new Vue({
             }
             else {
                 const fields_to_search = ['name', 'name_transcription', 'illustration', 'illustration_transcription'];
-                // const search_results = this.search_index.search([{query: normalized_search, field: "name"}]);
                 const search_results = this.search_index.search(normalized_search, fields_to_search);
 
                 // Extract `result` arrays from the search results
@@ -398,8 +397,27 @@ var app = new Vue({
 
         },
         
-        advanced_search: function(selected_options) {
+        advanced_search: function() {
+            let selected_options = {};
+            selected_options['semantic_roles'] = this.semantic_roles_selected;
+            selected_options['morphology'] = this.morphology_selected;
+            selected_options['syntactic_type_of_construction'] = this.syntactic_type_of_construction_selected;
+            selected_options['syntactic_function_of_anchor'] = this.syntactic_function_of_anchor_selected;
+            selected_options['syntactic_structure_of_anchor'] = this.syntactic_structure_of_anchor_selected;
+            selected_options['part_of_speech_of_anchor'] = this.part_of_speech_of_anchor_selected;
+            selected_options['cefr_level'] = this.level_selected;
+            selected_options['semantic_types_flat'] = this.semantic_types_selected;
+
             let index = this.search_index
+
+            // Check if no options are selected
+            const hasSelectedOptions = Object.values(selected_options).some(option => option && option.length > 0);
+                
+            if (!hasSelectedOptions) {
+                // If no options are selected, return all records
+                this.record_numbers_matching_search = this.record_numbers;
+                return;
+            }
 
             let record_numbers_matching_search = new Set();
 
@@ -419,7 +437,9 @@ var app = new Vue({
             }
         
             // Convert to sorted array
-            return Array.from(record_numbers_matching_search).sort((a, b) => a - b);
+            record_numbers_matching_search = [...new Set(record_numbers_matching_search)];
+            record_numbers_matching_search.sort((a, b) => a - b);
+            this.record_numbers_matching_search = record_numbers_matching_search;
         },
         
         annotate: function(text, reverse_string) {
