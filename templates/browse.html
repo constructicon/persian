@@ -49,22 +49,29 @@
           <div v-if="current_record_number != null">
             {[ current_record_number ]}
             <br>
+            <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+              <p class="text-center mb-0"><b>NAME</b></p>
+            </div>
 
-            <p class="text-center"><b>NAME</b></p>
             <div style="direction:RTL; text-align: right">
               <b>{[ records[current_record_number].name ]}</b>
             </div>
+
             <div style="direction:RTL; text-align: right">
               <i>{[ records[current_record_number].illustration ]}</i>
             </div>
 
             <br>
-            <p class="text-center"><b>NAME TRANSCRIPTION</b></p>
+            <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+              <p class="text-center mb-0"><b>NAME TRANSCRIPTION</b></p>
+            </div>
             <p>{[ records[current_record_number].name_transcription ]}<br>
             {[ records[current_record_number].illustration_transcription ]}</p>
 
             <br>
-            <p class="text-center"><b>ENGLISH EQUIVALENT</b></p>
+            <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+              <p class="text-center mb-0"><b>ENGLISH EQUIVALENT</b></p>
+            </div>
             <p>{[ records[current_record_number].name_translation ]}</p>
 
             <br>
@@ -72,7 +79,9 @@
 
             <div v-for="definition in records[current_record_number].definitions">
               <br>
-              <p class="text-center"><b>DEFINITION ({[ to_title_case(key(definition)) ]})</b></p>
+              <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                <p class="text-center mb-0"><b>DEFINITION ({[ to_title_case(key(definition)) ]})</b></p>
+              </div>
             
               <div v-if="key(definition) == 'persian'" style="direction:RTL; text-align: right">
                 <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="annotate(remove_quotation_marks(value(definition)), true)"></span>
@@ -84,7 +93,9 @@
             </div>
 
             <br>
-            <p class="text-center"><b>EXAMPLES</b></p>
+            <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+              <p class="text-center mb-0"><b>EXAMPLES</b></p>
+            </div>
             <div>
               <ol style="direction:rtl; text-align: right">
                 <li v-for="example in records[current_record_number].examples">
@@ -99,7 +110,9 @@
             
             <div v-if="records[current_record_number].cefr_level">
               <br>
-              <p class="text-center"><b>CEFR LEVEL</b> {[ records[current_record_number].cefr_level ]}</p>
+              <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                <p class="text-center mb-0"><b>CEFR LEVEL</b> {[ records[current_record_number].cefr_level ]}</b></p>
+              </div>
               <br>
             </div>
 
@@ -111,7 +124,9 @@
             <div v-if="show_additional_information">
               <br>
               <div v-show="records[current_record_number].common_fillers[0] != null">
-                <p class="text-center"><b>COMMON FILLERS</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>COMMON FILLERS</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].common_fillers">{[ item ]}</li>
                 </ul>
@@ -120,7 +135,9 @@
               
               
               <div v-if="records[current_record_number].semantic_types != null">
-                <p class="text-center"><b>SEMANTIC TYPE</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>SEMANTIC TYPE</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].semantic_types">
                     {[ item['type'] ]}
@@ -133,7 +150,9 @@
               </div>
 
               <div v-show="records[current_record_number].syntactic_type_of_construction[0] != null">
-                <p class="text-center"><b>SYNTACTIC TYPE OF CONSTRUCTION</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>SYNTACTIC TYPE OF CONSTRUCTION</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].syntactic_type_of_construction">{[ item ]}</li>
                 </ul>
@@ -142,7 +161,9 @@
 
               
               <div v-show="records[current_record_number].syntactic_function_of_anchor[0] != null">
-                <p class="text-center"><b>SYNTACTIC FUNCTION OF ANCHOR</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>SYNTACTIC FUNCTION OF ANCHOR</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].syntactic_function_of_anchor">{[ item ]}</li>
                 </ul>
@@ -150,7 +171,9 @@
               </div>
 
               <div v-show="records[current_record_number].syntactic_structure_of_anchor[0] != null">
-                <p class="text-center"><b>SYNTACTIC STRUCTURE OF ANCHOR</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>SYNTACTIC STRUCTURE OF ANCHOR</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].syntactic_structure_of_anchor">{[ item ]}</li>
                 </ul>
@@ -158,7 +181,9 @@
               </div>
               
               <!-- <div v-if="!records[current_record_number].part_of_speech_of_anchor.length"> -->
-                <p class="text-center"><b>PART OF SPEECH OF ANCHOR</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>PART OF SPEECH OF ANCHOR</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].part_of_speech_of_anchor">{[ item ]}</li>
                 </ul>
@@ -181,15 +206,20 @@
                   <li v-for="item in records[current_record_number].dependency_structure_of_illustration">{[ item ]}</li>
                 </span>
               </ol> -->
-
-              <p class="text-center"><b>COMMUNICATIVE TYPE</b></p>
-              <ul>
-                <li v-for="item in records[current_record_number].intonation">{[ item ]}</li>
-              </ul>
+              <div v-if="records[current_record_number].intonation.length">
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>COMMUNICATIVE TYPE</b></p>
+                </div>
+                <ul>
+                  <li v-for="item in records[current_record_number].intonation">{[ item ]}</li>
+                </ul>
+              </div>
 
               <div v-if="records[current_record_number].usage_label.length > 0">
                 <br>
-                <p class="text-center"><b>USAGE LABEL</b> </p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>USAGE LABEL</b></p>
+                </div>
                 <ul>                
                   <li v-for="item in records[current_record_number].usage_label">{[ item ]}</li>
                 </ul>
@@ -210,7 +240,9 @@
                 <div v-show="value(comment).trim().length != 2">
                   
                   <br>
-                  <p class="text-center"><b>COMMENT ({[ to_title_case(key(comment)) ]})</b></p>
+                  <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                    <p class="text-center mb-0"><b>COMMENT ({[ to_title_case(key(comment)) ]})</b></p>
+                  </div>
                   <div v-if="key(comment) == 'Persian'" style="direction:RTL; text-align: right">
                     <span style="direction:rtl; unicode-bidi:bidi-override;" v-html="remove_quotation_marks(value(comment))"></span>
                   </div>
@@ -223,7 +255,9 @@
 
               <div v-if="records[current_record_number].references">
                 <br>
-                <p class="text-center"><b>REFERENCES</b></p>
+                <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
+                  <p class="text-center mb-0"><b>REFERENCES</b></p>
+                </div>
                 <ul>
                   <li v-for="item in records[current_record_number].references">{[ item ]}</li>
                 </ul>
