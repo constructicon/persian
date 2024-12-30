@@ -180,7 +180,7 @@
                 <br>
               </div>
               
-              <!-- <div v-if="!records[current_record_number].part_of_speech_of_anchor.length"> -->
+              <div v-if="!!records[current_record_number].part_of_speech_of_anchor[0]">
                 <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
                   <p class="text-center mb-0"><b>PART OF SPEECH OF ANCHOR</b></p>
                 </div>
@@ -189,7 +189,7 @@
                 </ul>
 
                 <br>
-              <!-- </div> -->
+              </div>
 
               <!-- <b>DEPENDENCY STRUCTURE</b>
               <ol>
@@ -206,7 +206,7 @@
                   <li v-for="item in records[current_record_number].dependency_structure_of_illustration">{[ item ]}</li>
                 </span>
               </ol> -->
-              <div v-if="records[current_record_number].intonation.length">
+              <div v-if="!!records[current_record_number].intonation[0]">
                 <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
                   <p class="text-center mb-0"><b>COMMUNICATIVE TYPE</b></p>
                 </div>
@@ -215,7 +215,7 @@
                 </ul>
               </div>
 
-              <div v-if="records[current_record_number].usage_label.length > 0">
+              <div v-if="!!records[current_record_number].usage_label[0]">
                 <br>
                 <div class="p-2 m-1 rounded" style="background-color: rgba(107,237,183, 0.5);">
                   <p class="text-center mb-0"><b>USAGE LABEL</b></p>
