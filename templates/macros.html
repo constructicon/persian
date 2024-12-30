@@ -1,6 +1,6 @@
 {% macro treeselect(key) %}
-  <div class="col-md-6">
-    <label>{{ key | replace(from="_", to=" ") | capitalize }}</label>
+  <div class="col-md-6 float-right my-2 justify-content-center">
+    <!-- <label>{{ key | replace(from="_", to=" ") | capitalize }}</label> -->
     <treeselect
       :multiple="true"
       :options="{{ key }}_options"
