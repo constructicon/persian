@@ -7,5 +7,5 @@ The Persian Constructicon is still in its early stages of development. At presen
   
   
 To cite the Persian Constructicon, please use:  
-Reza Soltani, Radovan Bast, Zoia Butenko, Laura A. Janda, Tore Nesset. 2024. The Persian Constructicon. Available at https://constructicon.github.io/persian/
+Reza Soltani, Radovan Bast, Zoia Butenko, Laura A. Janda, Tore Nesset. 2024. The Persian Constructicon. Available at [https://constructicon.github.io/persian/](https://constructicon.github.io/persian/)
  
